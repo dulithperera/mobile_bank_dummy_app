@@ -1,0 +1,196 @@
+{
+  "sessions": [
+    {
+      "id": 1,
+      "participant_id": "Dulith Perera",
+      "phone_number": "+94 76 2829255",
+      "created_at": "2026-06-23T04:19:24.196Z",
+      "type": "TRANSFER",
+      "amount": 25000,
+      "oldbalanceOrg": 320154.03,
+      "newbalanceOrig": 295154.03,
+      "dest_name": "Saman Fernando",
+      "dest_acc": "AC161728",
+      "is_new_beneficiary": 1,
+      "amount_to_avg_ratio": 2.98,
+      "otp_response_time": 23.9,
+      "call_in_progress_flag": 0,
+      "otp_rerequest_count": 0,
+      "no_of_transactions_past10min": 0,
+      "time_of_day": 9,
+      "failed_otp_attempts": 1,
+      "transaction_to_login_gap": 10.5,
+      "is_otp_abuse_fraud": 0
+    },
+    {
+      "id": 2,
+      "participant_id": "DP",
+      "phone_number": "+94762829255",
+      "created_at": "2026-06-23T04:20:29.671Z",
+      "type": "PAYMENT",
+      "amount": 22222,
+      "oldbalanceOrg": 267615.02,
+      "newbalanceOrig": 245393.02,
+      "dest_name": "Kumari Senanayake",
+      "dest_acc": "AC294172",
+      "is_new_beneficiary": 0,
+      "amount_to_avg_ratio": 2.51,
+      "otp_response_time": 23,
+      "call_in_progress_flag": 1,
+      "otp_rerequest_count": 0,
+      "no_of_transactions_past10min": 3,
+      "time_of_day": 9,
+      "failed_otp_attempts": 0,
+      "transaction_to_login_gap": 6.7,
+      "is_otp_abuse_fraud": 1
+    },
+    {
+      "id": 3,
+      "participant_id": "Senuli",
+      "phone_number": "+94761234567",
+      "created_at": "2026-06-23T04:36:21.189Z",
+      "type": "TRANSFER",
+      "amount": 2000,
+      "oldbalanceOrg": 233100.39,
+      "newbalanceOrig": 231100.39,
+      "dest_name": "ABC",
+      "dest_acc": "234342",
+      "is_new_beneficiary": 1,
+      "amount_to_avg_ratio": 0.15,
+      "otp_response_time": 17.6,
+      "call_in_progress_flag": 0,
+      "otp_rerequest_count": 0,
+      "no_of_transactions_past10min": 1,
+      "time_of_day": 10,
+      "failed_otp_attempts": 0,
+      "transaction_to_login_gap": 17.2,
+      "is_otp_abuse_fraud": 0
+    }
+  ],
+  "otpChallenges": {
+    "g0uMbWRmek": {
+      "phoneNumber": "+94 76 2829255",
+      "code": "257828",
+      "label": 0,
+      "requestedAt": 1782188340266,
+      "rerequestCount": 0,
+      "failedAttempts": 0
+    },
+    "q5AD3dmxZS": {
+      "phoneNumber": "+94 76 2829255",
+      "code": "125314",
+      "label": 0,
+      "requestedAt": 1782188340267,
+      "rerequestCount": 0,
+      "failedAttempts": 1
+    },
+    "ddmZmvZNZh": {
+      "phoneNumber": "+94762829255",
+      "code": "538900",
+      "label": 1,
+      "requestedAt": 1782188406668,
+      "rerequestCount": 0,
+      "failedAttempts": 0
+    },
+    "BpAzs006WE": {
+      "phoneNumber": "+94762829255",
+      "code": "414384",
+      "label": 1,
+      "requestedAt": 1782188406669,
+      "rerequestCount": 0,
+      "failedAttempts": 0
+    },
+    "nhnKBBikut": {
+      "phoneNumber": "+94761234567",
+      "code": "231781",
+      "label": 0,
+      "requestedAt": 1782189363599,
+      "rerequestCount": 0,
+      "failedAttempts": 0
+    },
+    "qNQOBURfH5": {
+      "phoneNumber": "+94761234567",
+      "code": "865814",
+      "label": 0,
+      "requestedAt": 1782189363600,
+      "rerequestCount": 0,
+      "failedAttempts": 0
+    }
+  },
+  "participantAccounts": {
+    "Dulith Perera": {
+      "balance": 295154.02785288804,
+      "avgAmount": 8382.900282427527,
+      "beneficiaries": [
+        {
+          "name": "Kumari Jayasuriya",
+          "acc": "AC588347"
+        },
+        {
+          "name": "Dilani Jayasuriya",
+          "acc": "AC670086"
+        },
+        {
+          "name": "Anjali Jayasuriya",
+          "acc": "AC853628"
+        },
+        {
+          "name": "Nimal Rathnayake",
+          "acc": "AC989203"
+        },
+        {
+          "name": "Saman Fernando",
+          "acc": "AC161728"
+        }
+      ],
+      "lastLoginTime": 1782188329775
+    },
+    "DP": {
+      "balance": 245393.0212746953,
+      "avgAmount": 8856.12271147527,
+      "beneficiaries": [
+        {
+          "name": "Ruwan Silva",
+          "acc": "AC358578"
+        },
+        {
+          "name": "Kumari Senanayake",
+          "acc": "AC294172"
+        },
+        {
+          "name": "Pradeep Silva",
+          "acc": "AC843084"
+        }
+      ],
+      "lastLoginTime": 1782188399967
+    },
+    "Senuli": {
+      "balance": 231100.39259480033,
+      "avgAmount": 13302.520816028235,
+      "beneficiaries": [
+        {
+          "name": "Saman Senanayake",
+          "acc": "AC535606"
+        },
+        {
+          "name": "Pradeep Rathnayake",
+          "acc": "AC255874"
+        },
+        {
+          "name": "Saman Jayasuriya",
+          "acc": "AC604450"
+        },
+        {
+          "name": "Hasini Fernando",
+          "acc": "AC161772"
+        },
+        {
+          "name": "ABC",
+          "acc": "234342"
+        }
+      ],
+      "lastLoginTime": 1782189346386
+    }
+  },
+  "nextSessionId": 4
+}

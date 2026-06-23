@@ -1,0 +1,10 @@
+.next/
+out/
+node_modules/
+.env*.local
+.env
+
+# old directories (safe to delete after confirming the Next.js app works)
+client/node_modules/
+server/node_modules/
+server/.env
