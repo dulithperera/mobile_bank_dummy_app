@@ -15,21 +15,27 @@ export default function OtpScreen({ phoneNumber, label, onVerified, onError }) {
   const [errorMsg, setErrorMsg] = useState('');
   const inputRefs = useRef([]);
   const timerRef = useRef(null);
+  const requestedRef = useRef(false);
+  const isMountedRef = useRef(true);
 
   useEffect(() => {
-    let mounted = true;
-    api.requestOtp(phoneNumber, label)
-      .then((res) => {
-        if (!mounted) return;
-        setChallengeId(res.challengeId);
-        setRequestedAt(res.requestedAt);
-        setSending(false);
-      })
-      .catch((err) => {
-        setErrorMsg('Could not send OTP: ' + err.message);
-        setSending(false);
-      });
-    return () => { mounted = false; };
+    isMountedRef.current = true;
+    if (!requestedRef.current) {
+      requestedRef.current = true;
+      api.requestOtp(phoneNumber, label)
+        .then((res) => {
+          if (!isMountedRef.current) return;
+          setChallengeId(res.challengeId);
+          setRequestedAt(res.requestedAt);
+          setSending(false);
+        })
+        .catch((err) => {
+          if (!isMountedRef.current) return;
+          setErrorMsg('Could not send OTP: ' + err.message);
+          setSending(false);
+        });
+    }
+    return () => { isMountedRef.current = false; };
   }, []);
 
   useEffect(() => {

@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -v \"^$\")",
+      "Bash(ipconfig getifaddr *)",
+      "Bash(awk '{print $2}')"
+    ]
+  }
+}

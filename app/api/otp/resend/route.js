@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getChallenge, updateChallenge } from '@/lib/db';
+import { sendOtpSms } from '@/lib/sms';
 
 const DEV_MODE = process.env.DEV_MODE_NO_SMS === 'true';
 
@@ -18,13 +19,7 @@ export async function POST(request) {
     console.log(`\n[DEV MODE] Resent OTP for ${challenge.phoneNumber}: ${challenge.code}\n`);
   } else {
     try {
-      const twilio = (await import('twilio')).default;
-      const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-      await client.messages.create({
-        body: `Your SecureBank verification code is ${challenge.code}. Do not share this with anyone.`,
-        from: process.env.TWILIO_PHONE_NUMBER,
-        to: challenge.phoneNumber,
-      });
+      await sendOtpSms(challenge.phoneNumber, `Your SecureBank verification code is ${challenge.code}. Do not share this with anyone.`);
     } catch (err) {
       return NextResponse.json({ error: 'SMS resend failed', detail: err.message }, { status: 500 });
     }

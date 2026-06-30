@@ -26,10 +26,10 @@ export default function Login({ onSubmit, error }) {
         />
       </div>
       <div className="field">
-        <label>PHONE NUMBER (with country code)</label>
+        <label>PHONE NUMBER (with country code, no +)</label>
         <input
           type="tel"
-          placeholder="+94 7X XXX XXXX"
+          placeholder="94 7X XXX XXXX"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
         />
@@ -38,7 +38,10 @@ export default function Login({ onSubmit, error }) {
       <button
         className="btn btn-primary"
         disabled={!name.trim() || !phone.trim()}
-        onClick={() => onSubmit(name.trim(), phone.trim())}
+        onClick={() => {
+          const digits = phone.trim().replace(/[^0-9]/g, '');
+          onSubmit(name.trim(), `+${digits}`);
+        }}
       >
         Log in
       </button>

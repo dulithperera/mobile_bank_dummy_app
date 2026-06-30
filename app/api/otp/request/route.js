@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { setChallenge } from '@/lib/db';
 import { genOtp, genChallengeId } from '@/lib/utils';
+import { sendOtpSms } from '@/lib/sms';
 
 const DEV_MODE = process.env.DEV_MODE_NO_SMS === 'true';
 
@@ -25,15 +26,9 @@ export async function POST(request) {
     console.log(`\n[DEV MODE] OTP for ${phoneNumber}: ${code}\n`);
   } else {
     try {
-      const twilio = (await import('twilio')).default;
-      const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-      await client.messages.create({
-        body: `Your SecureBank verification code is ${code}. Do not share this with anyone.`,
-        from: process.env.TWILIO_PHONE_NUMBER,
-        to: phoneNumber,
-      });
+      await sendOtpSms(phoneNumber, `Your SecureBank verification code is ${code}. Do not share this with anyone.`);
     } catch (err) {
-      console.error('Twilio send failed:', err.message);
+      console.error('SMS send failed:', err.message);
       return NextResponse.json({ error: 'SMS send failed', detail: err.message }, { status: 500 });
     }
   }

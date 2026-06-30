@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { api } from '@/lib/api';
+import { supabase } from '@/lib/supabase';
 import Login from './Login';
 import Dashboard from './Dashboard';
 import OtpScreen from './OtpScreen';
@@ -23,12 +24,25 @@ export default function App() {
 
   const [lastSession, setLastSession] = useState(null);
   const [totalRows, setTotalRows] = useState(0);
+  const [testData, setTestData] = useState([]);
 
   const label = mode === 'fraud' ? 1 : 0;
 
   useEffect(() => {
     api.getMode().then(res => setMode(res.mode)).catch(() => {});
     api.getSummary().then(res => setTotalRows(res.total)).catch(() => {});
+
+    if (supabase) {
+      supabase
+        .from('test')
+        .select('name')
+        .then(({ data }) => {
+          if (data) {
+            setTestData(data);
+          }
+        })
+        .catch(err => console.error('Error fetching test table:', err));
+    }
   }, []);
 
   async function handleLoginSubmit(name, phone) {
@@ -111,6 +125,11 @@ export default function App() {
         <span onClick={openResearchPanel} style={{ cursor: 'pointer' }}>
           <span className="dot"></span>RESEARCH MODE
         </span>
+        {testData.length > 0 && (
+          <span style={{ marginLeft: '15px', color: '#ffb300', fontWeight: 'bold' }}>
+            [SUPABASE TEST: {testData.map(d => d.name).join(', ')}]
+          </span>
+        )}
         <span>SESSIONS: {totalRows}</span>
       </div>
       <div className="app-header">
