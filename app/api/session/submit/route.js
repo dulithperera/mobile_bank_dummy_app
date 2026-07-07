@@ -3,7 +3,7 @@ import { getParticipant, setParticipant, appendSession, getNextSessionId } from 
 
 export async function POST(request) {
   const {
-    participantId, phoneNumber, label,
+    participantId, phoneNumber, ageCategory, label,
     type, amount, isNewBeneficiary, destName, destAcc,
     otpResponseTime, callInProgressFlag, otpRerequestCount, failedOtpAttempts,
     transactionToLoginGap, noOfTransactionsPast10min,
@@ -22,6 +22,7 @@ export async function POST(request) {
     id,
     participant_id: participantId,
     phone_number: phoneNumber,
+    age_category: ageCategory || null,
     created_at: new Date().toISOString(),
     type,
     amount,

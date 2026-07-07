@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { api } from '@/lib/api';
 import { supabase } from '@/lib/supabase';
+import AgeSelect from './AgeSelect';
 import Login from './Login';
 import Dashboard from './Dashboard';
 import OtpScreen from './OtpScreen';
@@ -10,10 +11,11 @@ import Confirmation from './Confirmation';
 import DatasetView from './DatasetView';
 
 export default function App() {
-  const [screen, setScreen] = useState('login');
+  const [screen, setScreen] = useState('age');
   const [mode, setMode] = useState('genuine');
   const [loginError, setLoginError] = useState('');
 
+  const [ageCategory, setAgeCategory] = useState('');
   const [participantId, setParticipantId] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [account, setAccount] = useState(null);
@@ -79,6 +81,7 @@ export default function App() {
     const payload = {
       participantId,
       phoneNumber,
+      ageCategory,
       label,
       type: transferInfo.type,
       amount: transferInfo.amount,
@@ -111,18 +114,14 @@ export default function App() {
 
   function resetForNewSession() {
     setTransferInfo(null);
-    setScreen('login');
+    setAgeCategory('');
+    setScreen('age');
   }
 
-  function openResearchPanel() {
-    api.getMode().then(res => setMode(res.mode)).catch(() => {});
-    setScreen('dataset');
-  }
-
-  return (
+return (
     <div className="app-shell">
       <div className="research-bar">
-        <span onClick={openResearchPanel} style={{ cursor: 'pointer' }}>
+        <span>
           <span className="dot"></span>RESEARCH MODE
         </span>
         {testData.length > 0 && (
@@ -137,6 +136,10 @@ export default function App() {
         <div className="sub">otp-abuse &amp; fraud behaviour data collector</div>
       </div>
 
+      {screen === 'age' && (
+        <AgeSelect onSelect={cat => { setAgeCategory(cat); setScreen('login'); }} />
+      )}
+
       {screen === 'login' && (
         <Login onSubmit={handleLoginSubmit} error={loginError} />
       )}
@@ -149,8 +152,8 @@ export default function App() {
         <OtpScreen
           phoneNumber={phoneNumber}
           label={label}
+          transferInfo={transferInfo}
           onVerified={handleOtpVerified}
-          onError={(msg) => alert(msg)}
         />
       )}
 
@@ -165,7 +168,6 @@ export default function App() {
       {screen === 'dataset' && (
         <DatasetView
           onBack={() => setScreen('login')}
-          onModeChange={setMode}
         />
       )}
     </div>

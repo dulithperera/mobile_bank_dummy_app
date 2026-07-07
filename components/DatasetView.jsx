@@ -3,26 +3,14 @@
 import { useEffect, useState } from 'react';
 import { api } from '@/lib/api';
 
-export default function DatasetView({ onBack, onModeChange }) {
+export default function DatasetView({ onBack }) {
   const [summary, setSummary] = useState(null);
   const [mode, setMode] = useState(null);
-  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     api.getSummary().then(setSummary).catch(() => setSummary(null));
     api.getMode().then(res => setMode(res.mode)).catch(() => {});
   }, []);
-
-  async function handleSetMode(newMode) {
-    setSaving(true);
-    try {
-      await api.setMode(newMode);
-      setMode(newMode);
-      onModeChange?.(newMode);
-    } finally {
-      setSaving(false);
-    }
-  }
 
   if (!summary) return <div className="screen"><p className="lede">Loading dataset…</p></div>;
 
@@ -45,32 +33,14 @@ export default function DatasetView({ onBack, onModeChange }) {
         </div>
       </div>
 
-      <div style={{ margin: '20px 0', padding: '16px', background: 'var(--paper)', borderRadius: 8, border: '1px solid var(--line)' }}>
-        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, marginBottom: 10, color: 'var(--ink-soft)' }}>SESSION MODE</div>
-        <div style={{ display: 'flex', gap: 8 }}>
-          <button
-            className={mode === 'genuine' ? 'btn btn-primary' : 'btn btn-secondary'}
-            style={{ flex: 1, marginTop: 0 }}
-            disabled={saving || mode === 'genuine'}
-            onClick={() => handleSetMode('genuine')}
-          >
-            Genuine (label 0)
-          </button>
-          <button
-            className={mode === 'fraud' ? 'btn btn-coral' : 'btn btn-secondary'}
-            style={{ flex: 1, marginTop: 0 }}
-            disabled={saving || mode === 'fraud'}
-            onClick={() => handleSetMode('fraud')}
-          >
-            Coached (label 1)
-          </button>
+      {mode && (
+        <div style={{ margin: '20px 0', padding: '12px 16px', background: 'var(--paper)', borderRadius: 8, border: '1px solid var(--line)', fontSize: 12, color: 'var(--ink-soft)' }}>
+          <span style={{ fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, fontSize: 10 }}>Current mode — </span>
+          <strong style={{ color: mode === 'fraud' ? 'var(--coral)' : 'var(--teal)' }}>
+            {mode === 'fraud' ? 'Coached (label 1)' : 'Genuine (label 0)'}
+          </strong>
         </div>
-        {mode && (
-          <div style={{ fontSize: 11, marginTop: 8, color: 'var(--ink-soft)' }}>
-            All new sessions will be recorded as <strong>{mode === 'fraud' ? 'Coached (label 1)' : 'Genuine (label 0)'}</strong>.
-          </div>
-        )}
-      </div>
+      )}
 
       <div className="table-scroll">
         <table className="dataset">
