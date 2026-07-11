@@ -52,6 +52,7 @@ export default function OtpScreen({ phoneNumber, label, transferInfo, onVerified
   const inputRefs = useRef([]);
   const requestedRef = useRef(false);
   const isMountedRef = useRef(true);
+  const digitTimestampsRef = useRef([]);
 
   useEffect(() => {
     isMountedRef.current = true;
@@ -137,7 +138,10 @@ export default function OtpScreen({ phoneNumber, label, transferInfo, onVerified
     const next = [...digits];
     next[i] = val;
     setDigits(next);
-    if (val && i < 5) inputRefs.current[i + 1]?.focus();
+    if (val) {
+      digitTimestampsRef.current[i] = Date.now();
+      if (i < 5) inputRefs.current[i + 1]?.focus();
+    }
   }
 
   async function handleResend() {
@@ -160,11 +164,18 @@ export default function OtpScreen({ phoneNumber, label, transferInfo, onVerified
         setVerifying(false);
         return;
       }
+      const ts = digitTimestampsRef.current;
+      const gaps = ts.slice(1).map((t, i) => t - ts[i]).filter(d => d > 0);
+      const avgInterDigitTime = gaps.length
+        ? +(gaps.reduce((a, b) => a + b, 0) / gaps.length / 1000).toFixed(3)
+        : null;
+
       onVerified({
         otpResponseTime: +((Date.now() - convStartRef.current) / 1000).toFixed(1),
         otpRerequestCount: res.otpRerequestCount,
         failedOtpAttempts: res.failedOtpAttempts,
         callInProgressFlag: label === 1 ? 1 : res.callInProgressFlag,
+        avgInterDigitTime,
       });
     } catch (err) {
       setErrorMsg('Verification failed: ' + err.message);

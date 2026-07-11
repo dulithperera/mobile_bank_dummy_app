@@ -92,6 +92,7 @@ export default function App() {
       callInProgressFlag: otpResult.callInProgressFlag,
       otpRerequestCount: otpResult.otpRerequestCount,
       failedOtpAttempts: otpResult.failedOtpAttempts,
+      avgInterDigitTime: otpResult.avgInterDigitTime,
       transactionToLoginGap,
       noOfTransactionsPast10min,
     };

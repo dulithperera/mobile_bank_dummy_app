@@ -6,7 +6,7 @@ export async function POST(request) {
     participantId, phoneNumber, ageCategory, label,
     type, amount, isNewBeneficiary, destName, destAcc,
     otpResponseTime, callInProgressFlag, otpRerequestCount, failedOtpAttempts,
-    transactionToLoginGap, noOfTransactionsPast10min,
+    avgInterDigitTime, transactionToLoginGap, noOfTransactionsPast10min,
   } = await request.json();
 
   const acct = await getParticipant(participantId);
@@ -33,6 +33,7 @@ export async function POST(request) {
     is_new_beneficiary: isNewBeneficiary ? 1 : 0,
     amount_to_avg_ratio: +(amount / acct.avgAmount).toFixed(2),
     otp_response_time: otpResponseTime,
+    avg_inter_digit_time: avgInterDigitTime ?? null,
     call_in_progress_flag: callInProgressFlag,
     otp_rerequest_count: otpRerequestCount,
     no_of_transactions_past10min: noOfTransactionsPast10min,
