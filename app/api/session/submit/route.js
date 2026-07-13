@@ -37,7 +37,7 @@ export async function POST(request) {
     call_in_progress_flag: callInProgressFlag,
     otp_rerequest_count: otpRerequestCount,
     no_of_transactions_past10min: noOfTransactionsPast10min,
-    time_of_day: new Date().getHours(),
+    time_of_day: +new Intl.DateTimeFormat('en', { hour: 'numeric', hour12: false, timeZone: 'Asia/Colombo' }).format(new Date()),
     failed_otp_attempts: failedOtpAttempts,
     transaction_to_login_gap: transactionToLoginGap,
     is_otp_abuse_fraud: label,
